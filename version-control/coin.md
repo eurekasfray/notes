@@ -3,11 +3,14 @@ A description for an adhoc version control system where each file maintains its 
 
 # Introduction
 
-In this document I describe an adhoc approach for a version control system tracks a single file instead of a set of files. The version control system maintains a repository for each file. If there are five files then there will be five repositories. Each repository is its own thing. The version control system doesn't maintain files as sets; rather it maintains them individually. I started this for exercise. Resolving problems and rebuilding existing things can be a great way to learn. I want to solve and build a simple version control system.
+In this document I describe an adhoc approach for a version control system tracks a single file instead of a set of files. The version control system maintains a repository for each file. If there are five files then there will be five repositories. Each repository is its own thing. The version control system doesn't maintain files as sets; rather it maintains a repository for each file. I started this for exercise. Resolving problems and rebuilding existing things can be a great way to learn. I want to solve and build a simple version control system.
 
 # Concepts
 
-* The *source file* is the file that is submitted to the revision control system. The revision control system retrieves raw content from the source file, processes the content, and maintains the revision history of the source file.
+
+* *Content* refers to any file content.
+
+* The *source file* is the file that is submitted to the revision control system to be commited.
 
 * A *repository* is a data structure that describes the revision history of a source file. A repository contains the original, revision patches, and metadata about the source file.
 
@@ -15,11 +18,11 @@ In this document I describe an adhoc approach for a version control system track
 
 * The *original* is the initial content submitted to the revision control system. The original is stored verbatim as the raw content of the file upon its first submission to the revision control system. The original serves an important role as the content from which all revisions are derived during reconstruction.
 
-* *Data differencing* (or simply *differencing*) is the operation of finding the difference between two values. Data differencing reduces the needed space that would exist if snapshots of entire changes were kept, as opposed to only tracking individual character changes within the file.
+* *Data differencing* (or simply *differencing*) is the operation of finding the difference between two values. Data differencing helps to find differences between two content and reduces storage space by tracking individual character changes between commits.
 
 * A *difference* (or *delta*) is given from differencing a source character and a target character. A difference may be expressed as `a - b`.
 
-* *`delta(a,b)`* is a function used to find the difference. The function accepts two character arguments and finds the differences between them.
+* *`delta(a,b)`* is a function used to find the difference. The function accepts two character arguments and finds the differences between them and returns the result.
 
 * A *source* refers to content which is patched up to produce a target during the reconstruction process.
 
@@ -112,43 +115,28 @@ The following is an algorithm for reconstructing any given revision by using the
 
 The Working of the Algorithm: The algorithm retrieves the original, and copies it as the source, because the reconstruction process must start somewhere&mdash;and where best to start but at the original? Each patching up of the source to create the target is called as a pass. So with that definition, it can be said that for each revision, the source is patched up to create the target; then, that the patched up&mdash;or in other words, reconstructed&mdash;target is used as the source for the next patching pass.
 
-
-            <li>Get <strong>revision number</strong> of <strong>target</strong></li>
-            <li>Store it as <strong>target revision number</strong></li>
-            <li>Get the <strong>original</strong></li>
-            <li>Copy it and store it as the <strong>source</strong></li>
-            <li>Get all revisions associated with the <strong>original</strong> in ascending order (from oldest to newest)</li>
-            <li>For each revision do:</li>
-            <ul>
-                <li>Get <strong>patch list</strong> associated with the current revision in ascending order (from first to last)</li>
-                <li>For each <strong>patch encoding</strong> in the current <strong>patch list</strong> do:</li>
-                <ul>
-                    <li>Extract the difference from the current patch encoding and store it as <strong>diff</strong></li>
-                    <li>Extract the index from the current <strong>patch encoding</strong> and store it as <strong>diff index</strong></li>
-                    <li>It's time to construct the target, so:</li>
-                    <ul>
-                        <li>Copy the <strong>source</strong> and store it as the <strong>target</strong>, because we need to begin patching the source in order to derive the target.</li>
-                        <li>If length of <strong>source</strong> is less than or equal to the <strong>diff index</strong> then</li>
-                        <ul>
-                            <li>In the <strong>target</strong> string, set the value at the <strong>diff index</strong> equal to the result of the equation (<strong>source[diff_index]</strong> + <strong>diff</strong>)</li>
-                        </ul>
-                        <li>Else, if the <strong>diff_index</strong> is greater than the length of <strong>source</strong></li>
-                        <ul>
-                            <li>Calculate the expression: (0 + <strong>diff_index</strong>)</li>
-                            <li>Appended the result to <strong>target</strong></li>
-                        </ul>
-                        <li>End if</li>
-                    </ul>
-                    <li>Hand <strong>target</strong> off to the next pass: Copy the <strong>target</strong> and set it as the <strong>source</strong></li>
-                </ul>
-                <li>End foreach</li>
-                <li>If revision number of current revision is equal to the revision number of the target, then the desired target has been reached:</li>
-                <ul>
-                    <li>Break away from this loop!</li>
-                </ul>
-                <li>End if</li>
-            </ul>
-            <li>End foreach</li>
-            <li>&nbsp;</li>
-            <li>Return <strong>target</strong></li>
-        </ul>
+* Get the **revision number** of **target**
+* Store it as **target revision number** 
+* Get the **original**
+* Store it as **source**
+* Get all revisions associated with the **original** in ascending order (from oldest to newest)
+* For each revision do:
+  * Get **patch list** associated with the current revision in ascending order (from first to last)
+  * For each **patch encoding** in the current **patch list** do:
+    * Extract the difference from the current patch encoding and store it as **diff**
+    * Extract the index from the current **patch encoding** and store it as **diff index**
+    * It's time to construct the target, so:
+      * Copy the **source** and store it as the **target**, because we need to begin patching the source in order to derive the target.
+      * If length of **source** is less than or equal to the **diff index** then
+        * In the **target** string, set the value at the **diff index** equal to the result of the equation (**source[diff_index]** + **diff**)
+      * Else, if the **diff_index** is greater than the length of **source**
+        * Calculate the expression: (0 + **diff_index**)
+        * Appended the result to **target**
+      * End if
+    * Hand **target** off to the next pass: Copy the **target** and set it as the **source**
+  * End foreach
+  * If revision number of current revision is equal to the revision number of the target, then the desired target has been reached:
+    * Break away from this loop
+  * End if
+* End foreach
+* Return **target**
