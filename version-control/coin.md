@@ -1,4 +1,5 @@
-# Coin &mdash; A description for an adhoc version control system where each file maintains its own a repository
+# Coin 
+A description for an adhoc version control system where each file maintains its own a repository.
 
 # Introduction
 
@@ -16,7 +17,9 @@ In this document I describe an adhoc approach for a version control system track
 
 * *Data differencing* (or simply *differencing*) is the operation of finding the difference between two values. Data differencing reduces the needed space that would exist if snapshots of entire changes were kept, as opposed to only tracking individual character changes within the file.
 
-* A *difference* is given from differencing a source character and a target character. A difference may be expressed as `a - b`.
+* A *difference* (or *delta*) is given from differencing a source character and a target character. A difference may be expressed as `a - b`.
+
+* *`delta(a,b)`* is a function used to find the difference. The function accepts two character arguments and finds the differences between them.
 
 * A *source* refers to content which is patched up to produce a target during the reconstruction process.
 
@@ -28,19 +31,17 @@ In this document I describe an adhoc approach for a version control system track
         
 * A *revision* refers to any submitted change to the file. After an update is accepted and processed by the revision control system, each change to the file is referred to as a revision.
 
-  * A revision has the following associated concepts:
-
-  * A *revision number* is an identification number. Each revision is assigned a revision number. From a technical aspect, a revision number is assigned to the patch list of a revision.
+* A *revision number* is an identification number. Each revision is assigned a revision number. From a technical aspect, a revision number is assigned to the patch list of a revision.
   
-    A *patch* is a structure of information that represents the difference found between the head and an update. A patch is produced from a difference between the head and an update. When an update is submitted, it is differenced against the head. The differences found are stored as patches.
+* A *patch* is a structure of information that represents the difference found between the head and an update. A patch is produced from a difference between the head and an update. When an update is submitted, it is differenced against the head. The differences found are stored as patches.
     
-    As its name describes, a patch is used to "patch up" a revision during the reconstruction process. A patch contains two key pieces of information that are needed for reconstruction: The calculated difference between two corresponding source characters; and the index location of the corresponding characters. Patches are represented as patch encodings. A patch encoding is a structure that consists of all needed key pieces of information. A comprehensive summary of a patch encoding is shown in the following:
+  As its name describes, a patch is used to "patch up" a revision during the reconstruction process. A patch contains two key pieces of information that are needed for reconstruction: The calculated difference between two corresponding source characters; and the index location of the corresponding characters. Patches are represented as patch encodings. A patch encoding is a structure that consists of all needed key pieces of information. A comprehensive summary of a patch encoding is shown in the following:
     
-    Patch encoding format
-    
-      diff@index
+  Patch notation format
+
+  * `diff@index`
             
-    Example
+  Example
   
       History:   Hello -> Hallo
       Index:     0 1 2 3 4
@@ -48,13 +49,9 @@ In this document I describe an adhoc approach for a version control system track
       Revision:  H a l l o
       Patch:     -4@1
             
-    Meaning
+  Meaning
   
-    > The revision control system never saves the revised text "Hallo" in its entirety. Only the individual changes was saved as a patches. The patch for this revision is encoded as `-4@1`. See, the decimal value of the ASCII character <code>e</code> is <code>101</code>, and the decimal value for `a` is `97`. The difference between 101 and 97 when expressed as `97`-`101` (in the format revision minus original) is `-4`.
-
-    Patch encoding syntax (expressed in ENBF)
-    
-       patch encoding = integer , "@" ,  integer ;
+  * The revision control system never saves the revised text "Hallo" in its entirety. Only the individual changes was saved as a patches. The patch for this revision is encoded as `-4@1`. See, the integer value of the ASCII character `e` is <code>101</code>, and the integer value for `a` is `97`. The difference between 101 and 97 when expressed as `delta(97,101)` (which calculates last_revision minus original) is `-4`.
         
 # Design
 
