@@ -1,5 +1,8 @@
 # Coin 
+
 A description for an adhoc version control system where each file maintains its own a repository.
+
+*(Draft version)*
 
 # Introduction
 
