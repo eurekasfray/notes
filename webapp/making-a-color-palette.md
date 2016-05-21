@@ -8,6 +8,7 @@
 0. Plot range by applying the diff to each value in HSV for `n` steps.
 0. Repeat steps A - B for dark point (where in this case you substract for each step)
 
+This is a draft. There still some kinks that needs to be worked out in the steps and algorithm. It needs to consider negative and positive diffs and how they should be handled. If a diff is negative then what steps do we take to ensure that the resulting color is correct (and vice versa for positive diffs)?
 
 ## Example
 
@@ -92,30 +93,30 @@
             
        Step 1: 
             HSV     255  057  060
-            diff   -000 +008 -010
+            diff   -000 -008 -010
             ------  ---  ---  ---
-            result  255  065  050
+            result  255  049  050
             ------  ---  ---  ---
             
        Step 2: 
-            HSV     255  065  050
-            diff   -000 +008 -010
+            HSV     255  049  050
+            diff   -000 -008 -010
             ------  ---  ---  ---
-            result  255  073  040
+            result  255  041  040
             ------  ---  ---  ---
             
        Step 3: 
-            HSV     255  073  040
-            diff   -000 +008 -010
+            HSV     255  041  040
+            diff   -000 -008 -010
             ------  ---  ---  ---
-            result  255  081  030
+            result  255  033  030
             ------  ---  ---  ---
             
        Step 4: 
-            HSV     255  081  030
-            diff   -000 +008 -010
+            HSV     255  033  030
+            diff   -000 -008 -010
             ------  ---  ---  ---
-            result  255  089  020
+            result  255  025  020
             ------  ---  ---  ---
        
        * I don't know whether to add/substract hue. What do I do with the hue?
