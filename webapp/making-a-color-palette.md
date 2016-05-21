@@ -1,3 +1,59 @@
+# Solution by hand:
+
+## Steps
+
+0. Establish base point, light point, dark point in HSV (format: `HSV(h,s,v)`; example: `HSV(225,2,97)`)
+0. Find difference between corresponding HSV values of the base point and light point.
+0. Find divide the result by `n` to get the number of steps to take between the base point and light point.
+0. Plot range by add `n` to each value in HSV for `n` steps
+0. Repeat steps A - B for dark point (where in this case you substract for each step)
+
+
+## Example
+
+    1. Establish points
+    
+       base point  = HSB(255,057,060)
+       light point = HSB(225,002,097)
+       dark point  = HSB(225,025,020)
+       
+    2. Find difference between base point and other points
+    
+       Difference between base point and light point:
+       base  :   225 057 060
+       light : - 225 002 097
+       ---------------------
+       diff  : = 000 055 037
+       ---------------------
+       
+       Difference between base point and dark point:
+       base  :   225 057 060
+       dark  : - 225 025 020
+       ---------------------
+       diff  : = 000 032 040
+       ---------------------
+       
+    3. Divide diff by steps. I choose 4 steps.
+       Divide H, S & V by the given steps
+    
+       Light-point diff:
+         000 055 037 div 4
+       = 000 014 009
+    
+       Dark-point diff:
+         000 032 040 div 4
+       = 000 008 010
+       
+    4. Plot values
+    
+       Plot for range from base point to light point:
+       Init:   HSV(255,057,060)
+       Step 1: HSV(255,057,060) + (000,008,010) = HSV(
+       Step 2: HSV(255,057,060) + (000,008,010) =
+       Step 3: HSV(255,057,060) + (000,008,010) =
+       Step 4: HSV(255,057,060) + (000,008,010) =
+    
+
 # Math solution:
 
 The following solution generates a palette for a given hue by calculating a gradient range from dark to light. Currently, we need to know three things first: The base color, the light color, and the dark color. A curve is plotted along the 2d color graph using these color points.
@@ -5,7 +61,7 @@ The following solution generates a palette for a given hue by calculating a grad
 All code displayed in this doc are pseudocode.
 
 
-### Palette::generate()
+## `Palette::generate()`
 
 The pseudocode below shows a prototype for a class method that performs the said calculation.
 
@@ -38,7 +94,7 @@ The method takes the following arguments:
 - Return `swatch`
 
 
-### The `Hsv` object
+## The `Hsv` object
 
 This object describes a color in HSV.
 
