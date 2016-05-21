@@ -5,7 +5,7 @@ The following solution generates a palette for a given hue by calculating a grad
 All code displayed in this doc are pseudocode.
 
 
-### `Palette::generate()`
+### Palette::generate()
 
 The pseudocode below shows a prototype for a class method that performs the said calculation.
 
@@ -26,15 +26,16 @@ The method takes the following arguments:
 - `int db_steps`: Number of steps to take between base color and dark-color point.
 
 
-### `Palette::generate()` algorithm
+### Algorithm
 
-- Establish base-color point, dark-color point, and light-color point
-- Plot curve along the 2d color graph 
+- Get base-color point, dark-color point, and light-color point
+- Plot curve along the 2d color graph using the points above
+- Create new `Swatch` object and store it as `swatch`
 - Perform `lb_steps` between the base-color point and the light-color point:
-  - For every step, store the the color at the step as an `Hsb` object.
+  - For every step, store the the color at the step as an `Hsb` object in `swatch`
 - Perform `db_steps` between the base-color point and the dark-color point:
-  - For every step, store the the color at the step as an `Hsb` object.
-- Return colors
+  - For every step, store the the color at the step as an `Hsb` object in `swatch`
+- Return `swatch`
 
 
 ### The `Hsv` object
