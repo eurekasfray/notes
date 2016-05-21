@@ -1,29 +1,53 @@
 # Math solution:
 
-The following solution generates a palette for a given hue by calculating a gradient range from dark to light. Currently, we need to know three things first: The base color, the lightest color, and the darkest color. A curve is plotted along the 2d color graph using these color points.
+The following solution generates a palette for a given hue by calculating a gradient range from dark to light. Currently, we need to know three things first: The base color, the light color, and the dark color. A curve is plotted along the 2d color graph using these color points.
 
 All code displayed in this doc are pseudocode.
 
 
-### Palette::generate() prototype
+### Palette::generate()
 
-The pseudocode below shows a prototype for a class method that performs the said calculation. The method takes the following arguments:
-
-- `int hue`: This is the hue for which the palette will be generated.
-- `Hsb l`: This is the lightest
+The pseudocode below shows a prototype for a class method that performs the said calculation.
 
     class Palette
     {
-        static Palette generate (Hsb b, Hsb l, Hsb d, int lb_steps, int db_steps)
+        static Palette generate (Hsv b, Hsv l, Hsv d, int lb_steps, int db_steps)
     }
+    
+The method takes the following arguments:
 
+- `int hue`: This is the hue for which the palette will be generated.
+- `Hsv b`: This is the base color. [TBD]
+- `Hsv l`: This is the light-color point [TBD]
+- `Hsv d`: This is the dark-color point [TBD]
+- `int lb_steps`: Number of steps to take between base color and light-color point.
+- `int db_steps`: Number of steps to take between base color and dark-color point.
+
+
+### The `Hsb` object
+
+This object describes a color in HSB.
+
+    class Hsb
+    {
+        private int h; // hue
+        private int s; // saturation
+        private int v; // value
+        
+        public Hsv(int h, int s, int v)
+        {
+            ...
+        }
+        
+        ...
+    }
 
 ### Algorithm
 
-- Establish base-color point, darkest point, and lightest point
+- Establish base-color point, dark-color point, and light-color point
 - Plot curve along the 2d color graph 
-- Perform `lb_steps` between the base-color point and the lightest point:
+- Perform `lb_steps` between the base-color point and the light-color point:
   - For every step, store the the color at the step as an `Hsb` object.
-- Perform `db_steps` between the base-color point and the darkest point:
+- Perform `db_steps` between the base-color point and the dark-color point:
   - For every step, store the the color at the step as an `Hsb` object.
 - Display the gathered colors
