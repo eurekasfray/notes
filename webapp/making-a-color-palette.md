@@ -4,7 +4,7 @@
 
 0. Establish base point, light point, dark point in HSV (format: `HSV(h,s,v)`; example: `HSV(225,2,97)`)
 0. Find difference between corresponding HSV values of the base point and light point.
-0. Find divide the result by `n` to get the number of steps to take between the base point and light point.
+0. Find diff by dividing the result by `n` to get the number of steps to take between the base point and light point.
 0. Plot range by add `n` to each value in HSV for `n` steps
 0. Repeat steps A - B for dark point (where in this case you substract for each step)
 
@@ -19,14 +19,14 @@
        
     2. Find difference between base point and other points
     
-       Difference between base point and light point:
+       Find difference between base point and light point:
        base  :   225 057 060
        light : - 225 002 097
        ---------------------
        diff  : = 000 055 037
        ---------------------
        
-       Difference between base point and dark point:
+       Find difference between base point and dark point:
        base  :   225 057 060
        dark  : - 225 025 020
        ---------------------
@@ -46,12 +46,19 @@
        
     4. Plot values
     
-       Plot for range from base point to light point:
+       Plot for range from base point to light point by adding the diffs for `n` steps:
        Init:   HSV(255,057,060)
-       Step 1: HSV(255,057,060) + (000,008,010) = HSV(
-       Step 2: HSV(255,057,060) + (000,008,010) =
-       Step 3: HSV(255,057,060) + (000,008,010) =
-       Step 4: HSV(255,057,060) + (000,008,010) =
+       Step 1: HSV(255,057,060) + (000,014,009) = HSV(255,071,069)
+       Step 2: HSV(255,071,069) + (000,014,009) = HSV(255,085,078)
+       Step 3: HSV(255,085,078) + (000,014,009) = HSV(255,099,099)
+       Step 4: HSV(255,099,087) + (000,014,009) = HSV(255,113,096)
+    
+       Plot for range from base point to dark point by subtract the diffs for `n` steps:
+       Init:   HSV(255,057,060)
+       Step 1: HSV(255,057,060) - (000,008,010) = HSV(255,049,050)
+       Step 2: HSV(255,049,050) - (000,008,010) = HSV(255,041,040)
+       Step 3: HSV(255,041,040) - (000,008,010) = HSV(255,033,030)
+       Step 4: HSV(255,033,030) - (000,008,010) = HSV(255,025,020)
     
 
 # Math solution:
