@@ -1,20 +1,8 @@
 # Math solution:
 
-The following solution generates a palette for a given hue by calculating a gradient range from dark to light. The hue remains constant while the saturation and value changes. Currently, we need to know three things first: The base color, the lightest color, and the darkest color.
+The following solution generates a palette for a given hue by calculating a gradient range from dark to light. Currently, we need to know three things first: The base color, the lightest color, and the darkest color. A curve is plotted along the 2d color graph using these color points.
 
 All code displayed in this doc are pseudocode.
-
-
-### Algorithm
-
-- Get hue. The hue color
-
-- Establish darkest point, midtone point, and lightest point
-- Plot curve along the 2d color graph 
-- Determine steps to take between darkest point and midtone point
-- Determine steps to take between midtone point and lightest point
-- Perform step across the established ranges
-- Display the gathered colors
 
 
 ### Palette::generate() prototype
@@ -26,5 +14,16 @@ The pseudocode below shows a prototype for a class method that performs the said
 
     class Palette
     {
-        static Palette generate (int hue, Hsb l, Hsb m, Hsb d, int lm_steps, int dm_steps)
+        static Palette generate (Hsb b, Hsb l, Hsb d, int lb_steps, int db_steps)
     }
+
+
+### Algorithm
+
+- Establish base-color point, darkest point, and lightest point
+- Plot curve along the 2d color graph 
+- Perform `lb_steps` between the base-color point and the lightest point:
+  - For every step, store the the color at the step as an `Hsb` object.
+- Perform `db_steps` between the base-color point and the darkest point:
+  - For every step, store the the color at the step as an `Hsb` object.
+- Display the gathered colors
