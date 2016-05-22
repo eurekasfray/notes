@@ -1,11 +1,15 @@
 ### Preamble
 
-I wrote this doc to keep and share what I know about web frameworks. I'm unable find websites, blogs, or documents that describe web frameworks in detail. I would like to change this state by providing information on the fundamentals of web frameworks. Currently web frameworks are a bit of mystery to me, so I've made it to document what I know. If something in this doc is incorrect feel free to correct it. I hope that I can grow this doc into something of substance for those who want to learn about web frameworks
+In this document I write what I know about web frameworks, because I can't find any detailed descriptions of how web frameworks work. I had to read the sources. That said, I'd like to change this by providing notes on the fundamentals of web frameworks.
+
+Currently web frameworks are a bit of a mystery to me, so I document what I know. I'm still learning and I'll update this doc as I continue. Free to pull me up on any anything that's incorrect. May this doc be valuable to those wanting to learn about web frameworks.
+
+> Draft: 20160522
 
 
 # What is a web framework?
 
-A web framework is a library of code that helps to speed up the development of a webapp by providing common webapp functionalities.
+A web framework is a library of code, created to help ease web development by providing common functionalities found in a webapp.
 
 
 # Responsibilities
@@ -15,9 +19,11 @@ A web framework is a library of code that helps to speed up the development of a
 - Provide security
 
 
-# 
+# Operation
 
-...
+- At its foundation a framework must fascillitate the communication between the client and server. The client and server communicate using the request-response pattern. The client requests a piece of data and the server responds with the requested data. The role of the framework is to inspect the request and return the appropriate response.
+
+- How do we allow the programmer to map responses to requests? To accomplish this, the framework must allow the developer to specify the request and the response.
 
 
 # Features
@@ -32,7 +38,14 @@ A web framework is a library of code that helps to speed up the development of a
 
 # Components
 
+## Front controller
+
 ## Router
 
-## 
+## Kernel
 
+## Controller
+
+## View
+
+## Model
