@@ -48,12 +48,13 @@ In this document I describe an adhoc approach for a version control system track
   * `diff@index`
             
   Example
-  
-      History:   Hello -> Hallo
-      Index:     0 1 2 3 4
-      Original:  H e l l o
-      Revision:  H a l l o
-      Patch:     -4@1
+```  
+History:   Hello -> Hallo
+Index:     0 1 2 3 4
+Original:  H e l l o
+Revision:  H a l l o
+Patch:     -4@1
+```
             
   Meaning
   
@@ -79,6 +80,7 @@ In the following example, Tupac Shakur titles his new unreleased album. But unsu
     
 In the following table, the 2Pac's title changes are listed as revisions and the actual character changes are listed as patches.
 
+```
   ------  --------  ---------------------
   Label   Revision  Patch
   ------  --------  ---------------------
@@ -92,9 +94,11 @@ In the following table, the 2Pac's title changes are listed as revisions and the
   O - Original
   R - Revision
   P - Patch
+```
 
 Reconstruction revision 3 starting from original:
 
+```
     -----------------------------------------
     0       1       2       3       4       5
     -----------------------------------------
@@ -109,6 +113,7 @@ Reconstruction revision 3 starting from original:
     -----------------------------------------
     0       1       2       3       4       5
     -----------------------------------------
+```
 
 ### Target reconstruction algorithm
         
