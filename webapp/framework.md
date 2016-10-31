@@ -12,14 +12,14 @@ A web framework is a library of code, created to help ease web development by pr
 
 # Responsibilities
 
-- Inspect the request and return the appropriate page
+- Inspect the request and return the appropriate resource
 - Handle sessions and cookies
 - Provide security
 
 
 # Operation
 
-- At its foundation a framework must fascillitate the communication between the client and server. The client and server communicate using the request-response pattern. The client requests a piece of data and the server responds with the requested data. The role of the framework is to inspect the request and return the appropriate response.
+- Fascillitate the communication between the client and server. The client and server communicate using the request-response pattern. The client requests a piece of data and the server responds with the requested data. The role of the framework is making inspecting the request and returning the appropriate response easy for the application.
 
 - How do we allow the programmer to map responses to requests? The framework must allow the programmer to specify the request and the response.
 
