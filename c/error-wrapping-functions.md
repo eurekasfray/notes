@@ -15,3 +15,9 @@ void *emalloc(size_t size)
     return p;
 }
 ```
+
+## Implementing an error-wrapping function
+
+The error-wrapped function should implement the same prototype as the parent function. It should use the same type.
+
+*TBD*
