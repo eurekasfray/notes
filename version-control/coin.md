@@ -38,6 +38,8 @@ In this document I describe an adhoc approach for a version control system that 
 * A *revision* refers to any submitted changes to the file. After an update is accepted and processed by the revision control system, the changes to the __content__ of the __source file__ is referred to as a __revision__. A revision maintains one __patch list__ to keep the changes made to that revision.
 
 * A *revision number* is an identification number that identifies a __revision__. Each revision is assigned a revision number. From a technical aspect, a revision number is assigned to the __patch list__ of a __revision__.
+
+* The *revision list* refers to a list of revisions. 
   
 * A *patch* is a structure of information that represents the __differences__ found between the __head__ and an __update__.
 
@@ -68,7 +70,7 @@ diff@index
 History:   Hello -> Hallo
 Index:     0 1 2 3 4
 Original:  H e l l o
-Revision:  H a l l o
+Update:    H a l l o
 Patch:     -4@1
 ```
             
@@ -76,20 +78,24 @@ The revision control system never saves the revised text "Hallo" in its entirety
   
 
 ## Reconstruction (what reconstruction is)
+
+[Precondition TBD]
         
-Reconstruction is a process of producing a target. A target is produced by iterative passes through each revision. The iterative-pass process begins with the original, where the original is copied as a source. Using the patches for the next revision, a target is produced. The target is then treated as the source for the next pass. This iteration continues until the desired target is produced.
+Reconstruction is a process of producing a target. A target is produced by iterative passes through each revision. The iterative-pass process begins with the original and walks up the revision list all the way to the head. When the process begins, the original is copied to be used as a source. Then a target is produced using the patches of the next revision in the revision list. The target is then treated as the source for the next pass. This iteration continues until the desired target is produced.
 
 ### Example of the reconstruction process
         
 In the following example, Tupac Shakur titles his new unreleased album. But unsure of what the album's title should be, he occasionally changes its name to one he finds more suitable. He starts with "Bedmen", but soon realizes that he made a typographical error. He corrects his mistake by changing the lowercased e's to lowercased a's, resulting in the title "Badman". However, having a fetish for words with lowercased letters, he adjusts the album's title to suit this preferred typographical style, and gets the title "badman". Then without rational reasoning he changes it once more, finally settling with the title, "bad".
 
-  Bedmen -> Badman -> badman -> bad
+```
+Bedmen -> Badman -> badman -> bad
+```
     
 In the following table, the 2Pac's title changes are listed as revisions and the actual character changes are listed as patches.
 
 ```
   ------  --------  ---------------------
-  Label   Revision  Patch
+  Label   Revision  Patch list
   ------  --------  ---------------------
   O:      Bedmen
   R1/P1:  Badman    -4@1, -4@4
@@ -155,3 +161,7 @@ The Working of the Algorithm: The algorithm retrieves the original, and copies i
   * End if
 * End foreach
 * Return **target**
+
+## Commit and checkout
+
+
