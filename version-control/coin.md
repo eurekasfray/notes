@@ -58,7 +58,7 @@ Patch:     -4@1
             
   Meaning
   
-  * The revision control system never saves the revised text "Hallo" in its entirety. Only the individual changes was saved as a patches. The patch for this revision is encoded as `-4@1`. See, the integer value of the ASCII character `e` is <code>101</code>, and the integer value for `a` is `97`. The difference between 101 and 97 when expressed as `delta(97,101)` (which calculates last_revision minus original) is `-4`.
+  * The revision control system never saves the revised text "Hallo" in its entirety. Only the individual changes was saved as a patches. The patch for this revision is encoded as `-4@1`. See, the integer value of the ASCII character `e` is `101`, and the integer value for `a` is `97`. The difference between 101 and 97 when expressed as `delta(97,101)` (which calculates `last_revision` minus `original`) is `-4`.
         
 # Design
 
