@@ -6,20 +6,20 @@ A description for an adhoc version control system where each file maintains its 
 
 # Introduction
 
-In this document I describe an adhoc approach for a version control system tracks a single file instead of a set of files. The version control system maintains a repository for each file. If there are five files then there will be five repositories. Each repository is its own thing. The version control system doesn't maintain files as sets; rather it maintains a repository for each file. I started this for exercise. Resolving problems and rebuilding existing things can be a great way to learn. I want to solve and build a simple version control system.
+In this document I describe an adhoc approach for a version control system that tracks a single file instead of a set of files. The version control system maintains a repository for each file. If there are five files then there will be five repositories. Each repository is its own thing. The version control system doesn't maintain files as sets; rather it maintains a repository for each file. I started this for exercise. Resolving problems and rebuilding existing things can be a great way to learn. I want to solve and build a simple version control system.
+
 
 # Concepts
 
-
-* *Content* refers to any file content.
+* *Content* refers to the content of a file.
 
 * The *source file* is the file that is submitted to the revision control system to be commited.
 
-* A *repository* is a data structure that describes the revision history of a source file. A repository contains the original, revision patches, and metadata about the source file.
+* A *repository* is a data structure that describes the revision history of a source file. A repository contains the [original](#concept-original), revision patches, and metadata about the source file.
 
 * The *repository file* contains the repository data structure. The file is maintained by the revision control system.
 
-* The *original* is the initial content submitted to the revision control system. The original is stored verbatim as the raw content of the file upon its first submission to the revision control system. The original serves an important role as the content from which all revisions are derived during reconstruction.
+* <a name="concept-original"></a>The *original* is the initial content submitted to the revision control system. The original is stored verbatim as the raw content of the file upon its first submission to the revision control system. The original serves an important role as the content from which all revisions are derived during reconstruction.
 
 * *Data differencing* (or simply *differencing*) is the operation of finding the difference between two values. Data differencing helps to find differences between two content and reduces storage space by tracking individual character changes between commits.
 
