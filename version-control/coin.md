@@ -15,31 +15,31 @@ In this document I describe an adhoc approach for a version control system that 
 
 * The *source file* is the file that is submitted to the revision control system to be commited.
 
-* A *repository* is a data structure that describes the revision history of a source file. A repository contains the original, revision patches, and metadata about the source file.
+* A *repository* is a data structure that describes the revision history of a source file. A repository contains the __original__, __revision patches__, and metadata about the __source file__.
 
 * The *repository file* contains the repository data structure. The file is maintained by the revision control system.
 
-* The *original* is the first content ever submitted to the revision control system. The original is stored verbatim as raw content upon submission to the revision control system. The original serves an important role as the content from which all revisions are derived during reconstruction.
+* The *original* is the first __content__ ever submitted to the revision control system. The original is stored verbatim as raw content upon submission to the revision control system. The original serves an important role as the content from which all revisions are derived during reconstruction.
 
-* *Data differencing* (or simply *differencing*) is the operation of finding the difference between two values. On a larger scale, data differencing helps to find differences between two content. It plays its role by helping to reduce storage space when it is used to track individual character changes between commits.
+* *Data differencing* (or simply *differencing*) is the operation of finding the __difference__ between two values. On a larger scale, data differencing helps to find differences between two __content__. It plays its role by helping to reduce storage space when it is used to track individual character changes between __commits__.
 
 * A *difference* (or *delta*) is given from differencing a source character and a target character. A difference may be expressed as `a - b`.
 
 * *`delta(a,b)`* is a function used to find the difference. The function accepts two character arguments and finds the differences between them and returns the result.
 
-* A *source* refers to content which is patched up to produce a target during the reconstruction process.
+* A *source* refers to __content__ which is patched up to produce a __target__ during the reconstruction process.
 
-* A *target* refers to a reconstructed form of a selected revision. A target is produced from reconstructing a source and with patches
+* A *target* refers to a reconstructed form of a selected revision. A target is produced from reconstructing a __source__ and with __patches__.
 
-* An *update* is new content submitted to the revision control system.
+* An *update* is new __content__ to be submitted to the revision control system.
 
-* The *head* refers to the most recent revision, and also refers to the last patch list.
+* The *head* refers to the most recent __revision__, and also refers to the last __patch list__.
         
-* A *revision* refers to any submitted changes to the file. After an update is accepted and processed by the revision control system, the changes to the file is referred to as a revision.
+* A *revision* refers to any submitted changes to the file. After an update is accepted and processed by the revision control system, the changes to the __content__ of the __source file__ is referred to as a __revision__.
 
-* A *revision number* is an identification number that identifies a revision. Each revision is assigned a revision number. From a technical aspect, a revision number is assigned to the patch list of a revision.
+* A *revision number* is an identification number that identifies a __revision__. Each revision is assigned a revision number. From a technical aspect, a revision number is assigned to the __patch list__ of a __revision__.
   
-* A *patch* is a structure of information that represents the __differences__ found between the __head__ and an __update__. A patch is produced from a difference between the __head__ and an __update__. When an update is submitted, it is differenced against the head. The differences found are stored as patches.
+* A *patch* is a structure of information that represents the __differences__ found between the __head__ and an __update__. 
     
   As its name describes, a patch is used to "patch up" a revision during the reconstruction process. A patch contains two key pieces of information that are needed for reconstruction: The calculated difference between two corresponding source characters; and the index location of the corresponding characters. Patches are represented as patch encodings. A patch encoding is a structure that consists of all needed key pieces of information. A comprehensive summary of a patch encoding is shown in the following:
     
@@ -68,6 +68,10 @@ Patch:     -4@1
 ## Data differencing
 
 To record changes made to content, the method designed for revision control management employs the usage of data differencing. Data differencing involves the process of taking two values and finding the difference between them. It is the different between the values that determine whether there was change made to content and if there was not changed. If the difference between the two values is zero, then there was no change made. However, if the difference is a non-zero, then there is a change. Using data differencing, two strings are compared character by character to find differencing between each character of the two strings. Where there are changes, the values are differenced and if the result is a non-zero, the difference is recorded along with the location of the value within the string and is stored as a patch.
+
+## Patching
+
+A patch is produced from a difference between the __head__ and an __update__. When an update is submitted, it is differenced against the head. The differences found are stored as patches.
 
 ## Reconstruction (what reconstruction is)
         
