@@ -25,7 +25,7 @@ In this document I describe an adhoc approach for a version control system that 
 
 * A *difference* (or *delta*) is given from differencing a source character and a target character. A difference may be expressed as `a - b`.
 
-* *`delta(a,b)`* is a function used to find the difference. The function accepts two character arguments and finds the differences between them and returns the result.
+* *`delta(a,b)`* is a function used to find the difference. The function accepts two character arguments and finds the differences between them and returns the result. `delta(a,b)` calculates `a` minus `b` where `a = last_revision` and `b` = `original`.
 
 * A *source* refers to __content__ which is patched up to produce a __target__ during the reconstruction process.
 
@@ -35,19 +35,35 @@ In this document I describe an adhoc approach for a version control system that 
 
 * The *head* refers to the most recent __revision__, and also refers to the last __patch list__.
         
-* A *revision* refers to any submitted changes to the file. After an update is accepted and processed by the revision control system, the changes to the __content__ of the __source file__ is referred to as a __revision__.
+* A *revision* refers to any submitted changes to the file. After an update is accepted and processed by the revision control system, the changes to the __content__ of the __source file__ is referred to as a __revision__. A revision maintains one __patch list__ to keep the changes made to that revision.
 
 * A *revision number* is an identification number that identifies a __revision__. Each revision is assigned a revision number. From a technical aspect, a revision number is assigned to the __patch list__ of a __revision__.
   
-* A *patch* is a structure of information that represents the __differences__ found between the __head__ and an __update__. 
-    
-  As its name describes, a patch is used to "patch up" a revision during the reconstruction process. A patch contains two key pieces of information that are needed for reconstruction: The calculated difference between two corresponding source characters; and the index location of the corresponding characters. Patches are represented as patch encodings. A patch encoding is a structure that consists of all needed key pieces of information. A comprehensive summary of a patch encoding is shown in the following:
-    
-  Patch notation format
+* A *patch* is a structure of information that represents the __differences__ found between the __head__ and an __update__.
 
-  * `diff@index`
-            
-  Example
+* A *patch list* represents a group of patches for a revision.
+    
+    
+# Design
+
+## Data differencing
+
+To record changes, I employ the usage of data differencing. Data differencing involves taking two values and finding the difference between them. The difference between the two values determine whether there was change made to the content or not. If the difference between the two values is zero, then no change was made. However, if the difference is a non-zero, then there was a change.
+
+To find changes made to content using data differencing, two strings are compared character by character to find the differencing between each character of the two strings. The corresponding characters are differenced, and if the result is a non-zero, the difference is recorded along with the index location of the compared characters within the string and is stored as a patch.
+
+## Patching
+
+Patches are produced when the version control system processes an update. When an update is submitted, it is differenced against the head. The differences found between the head and update are stored as patches in a patch list.
+
+A patch is used to "patch up" a revision during the reconstruction process. A patch contains two key pieces of information that are needed for reconstruction: 1) The calculated difference between two corresponding source characters; and 2) the index location of the corresponding characters. Patches are represented as patch encodings. A *patch encoding* is a structure that consists of all needed key pieces of information. A patch encoding is written as follows:
+
+```
+diff@index
+```
+        
+### Example of a patch
+
 ```  
 History:   Hello -> Hallo
 Index:     0 1 2 3 4
@@ -56,22 +72,8 @@ Revision:  H a l l o
 Patch:     -4@1
 ```
             
-  Meaning
+The revision control system never saves the revised text "Hallo" in its entirety. Only the individual changes were saved as a patches. The patch for this revision is encoded as `-4@1`. See, the integer value of the ASCII character `e` is `101`, and the integer value for `a` is `97`. The difference between 101 and 97 when expressed as `delta(97,101)` is `-4`.
   
-  * The revision control system never saves the revised text "Hallo" in its entirety. Only the individual changes was saved as a patches. The patch for this revision is encoded as `-4@1`. See, the integer value of the ASCII character `e` is `101`, and the integer value for `a` is `97`. The difference between 101 and 97 when expressed as `delta(97,101)` (which calculates `last_revision` minus `original`) is `-4`.
-  
-* A *patch list* represents a group of patches for a revision.
-       
-       
-# Design
-
-## Data differencing
-
-To record changes made to content, the method designed for revision control management employs the usage of data differencing. Data differencing involves the process of taking two values and finding the difference between them. It is the different between the values that determine whether there was change made to content and if there was not changed. If the difference between the two values is zero, then there was no change made. However, if the difference is a non-zero, then there is a change. Using data differencing, two strings are compared character by character to find differencing between each character of the two strings. Where there are changes, the values are differenced and if the result is a non-zero, the difference is recorded along with the location of the value within the string and is stored as a patch.
-
-## Patching
-
-A patch is produced from a difference between the __head__ and an __update__. When an update is submitted, it is differenced against the head. The differences found are stored as patches.
 
 ## Reconstruction (what reconstruction is)
         
