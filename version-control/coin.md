@@ -25,7 +25,7 @@ In this document I describe an adhoc approach for a version control system that 
 
 * A *difference* (or *delta*) is given from differencing a source character and a target character. A difference may be expressed as `a - b`.
 
-* *`delta(a,b)`* is a function used to find the difference. The function accepts two character arguments and finds the differences between them and returns the result. `delta(a,b)` calculates `a` minus `b` where `a = last_revision` and `b` = `original`.
+* *`delta(a,b)`* is a function used to find the difference. The function accepts two character arguments and finds the differences between them and returns the result. `delta(a,b)` calculates `a` minus `b` where `a = last_revision` and `b = original`.
 
 * A *source* refers to __content__ which is patched up to produce a __target__ during the reconstruction process.
 
